@@ -1,11 +1,32 @@
 // Core
 import React, { Component, createRef } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Formik, Form, Field } from 'formik';
 
 // Instruments
 import Styles from './styles.m.css';
 import { composer } from '../../bus/forms/shapes';
 
+// Actions
+import { createPostAsync } from '../../bus/posts/actions';
+
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators({createPostAsync}, dispatch),
+    }
+}
+
+@connect(
+    mapStateToProps,
+    mapDispatchToProps
+)
 export default class Composer extends Component {
     formikForm = createRef();
 
