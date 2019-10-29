@@ -9,7 +9,7 @@ import Styles from './styles.m.css';
 import { composer } from '../../bus/forms/shapes';
 
 // Actions
-import { createPostAsync } from '../../bus/posts/actions';
+import { postsActions } from '../../bus/posts/actions';
 
 const mapStateToProps = (state) => {
     return {
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({createPostAsync}, dispatch),
+        actions: bindActionCreators({createPostAsync: postsActions.createPostAsync}, dispatch),
     }
 }
 
