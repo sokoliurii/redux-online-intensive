@@ -1,0 +1,4 @@
+export const types = {
+	AUTHENTIFICATE: 'AUTHENTIFICATE',
+	SIGNUP_ASYNC: 'SIGNUP_ASYNC',
+}
