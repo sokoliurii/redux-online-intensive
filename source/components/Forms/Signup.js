@@ -1,20 +1,30 @@
 // Core
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { connect } from 'react-redux';
 import cx from 'classnames';
 
 // Instruments
 import Styles from './styles.m.css';
 import { signup } from '../../bus/forms/shapes';
 
-export default class SignupForm extends Component {
-    static defaultProps = {
-        // State
-        isFetching: false,
+import { authAction } from '../../bus/auth/actions';
 
-        // Actions
-        signupAsync: () => {},
-    };
+const mapStateToProps = (state) => {
+	return {
+		isFetching: state.ui.get('isFetching'),
+	}
+}
+
+const mapDispatchToProps = {
+	signupAsync: authAction.signupAsync,
+}
+
+@connect(
+    mapStateToProps,
+    mapDispatchToProps
+)
+export default class SignupForm extends Component {
 
     _submitSignupForm = (user) => {
         this.props.signupAsync(user);
