@@ -6,5 +6,10 @@ export const profileActions = {
 			type: types.FILL_PROFILE,
 			payload: profile
 		}
-	}
+	},
+	clearProfile: () => {
+		return {
+			type: types.CLEAR_PROFILE,
+		}
+	},
 }

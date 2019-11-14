@@ -1,6 +1,8 @@
 // Core
 import React, { Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 // Instruments
 import Styles from './styles.m.css';
@@ -8,6 +10,22 @@ import Styles from './styles.m.css';
 // Components
 import { Like } from '../../components';
 
+// Actions
+import { postsActions } from '../../bus/posts/actions';
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(
+            {removePostAsync: postsActions.removePostAsync}, 
+            dispatch
+        ),
+    }
+}
+
+@connect(
+    null,
+    mapDispatchToProps
+)
 export default class Post extends Component {
     _getCross = () => {
         const { profile, author } = this.props;

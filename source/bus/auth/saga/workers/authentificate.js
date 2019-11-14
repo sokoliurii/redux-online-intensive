@@ -5,19 +5,22 @@ import { authAction } from '../../actions';
 import { uiActions } from '../../../ui/actions';
 import { profileActions } from '../../../profile/actions';
 
-export function* login({payload: userInfo}) {
+export function* authentificate() {
 	try {
 		yield put(uiActions.startFetching());
 		
-		const response = yield apply(api, api.auth.login, [userInfo]);
+		const response = yield apply(api, api.auth.authentificate);
 		const { data: profile, message } = yield apply(response, response.json);
 		
 		if(response.status !== 200) {
-			throw new Error(message);
-		}
+			if(response.status !== 200) {
+				yield apply(localStorage, localStorage.removeItem, ['token']);
+				yield apply(localStorage, localStorage.removeItem, ['remember']);
 
-		if(userInfo.remember) {
-			yield apply(localStorage, localStorage.setItem, ['remember', true]);
+				return null;
+			}
+
+			throw new Error(message);
 		}
 
 		yield apply(localStorage, localStorage.setItem, ['token', profile.token]);
@@ -25,8 +28,9 @@ export function* login({payload: userInfo}) {
 		yield put(profileActions.fillProfile(profile));
 		yield put(authAction.authentificate());
 	} catch(error) {
-		console.log(error, 'login worker');
+		console.log(error, 'authentificate worker');
 	} finally {
 		yield put(uiActions.stopFetching());
+		yield put(authAction.initialize());
 	}
 }
