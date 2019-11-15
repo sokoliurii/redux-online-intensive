@@ -16,11 +16,7 @@ import { postsActions } from '../../bus/posts/actions';
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators(
-            {
-                removePostAsync: postsActions.removePostAsync,
-                likePostAsync: postsActions.likePostAsync,
-                unlikePostAsync: postsActions.unlikePostAsync,
-            }, 
+            {...postsActions},
             dispatch
         ),
     }
