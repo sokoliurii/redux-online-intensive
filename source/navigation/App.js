@@ -9,6 +9,9 @@ import Public from './Public';
 import Loading from '../components/Loading';
 
 import { authAction } from '../bus/auth/actions';
+import { socketActions } from '../bus/socket/actions';
+
+import { joinSocketChannel, socket } from '../init/socket';
 
 const mapStateToProps = (state) => {
     return {
@@ -19,6 +22,7 @@ const mapStateToProps = (state) => {
 
 const mapDispathToProps = {
     initializeAsync: authAction.initializeAsync,
+    ...socketActions
 }
 
 @hot(module)
@@ -26,7 +30,16 @@ const mapDispathToProps = {
 @connect(mapStateToProps, mapDispathToProps)
 export default class App extends Component {
     componentDidMount() {
-        this.props.initializeAsync();
+        const { initializeAsync, listenConnection } = this.props;
+        
+        initializeAsync();
+        listenConnection();
+        joinSocketChannel();
+    }
+
+    componentWillUnmount() {
+        socket.removeListener('connect');
+        socket.removeListener('disconnect');
     }
 
     render () {

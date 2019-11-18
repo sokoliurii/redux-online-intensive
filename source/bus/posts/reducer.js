@@ -5,39 +5,40 @@ import { types } from './types';
 const initialState = List();
 
 export const postsReducer = (state = initialState, action) => {
-	switch(action.type) {
+	const { type, payload } = action;
+	switch(type) {
 		case types.FILL_POSTS:
-			return fromJS(action.payload);
+			return fromJS(payload);
 		
 		case types.CREATE_POST:
-			return state.unshift(fromJS(action.payload));
+			return state.unshift(fromJS(payload));
 		
 		case types.CLEAR_POSTS:
 			return state.clear();
 		
 		case types.REMOVE_POST:
-			return state.filter(post => post.get('id') !== action.payload)
+			return state.filter(post => post.get('id') !== payload)
 		
 		case types.LIKE_POST:
 			return state.updateIn([
 				state.findIndex(post => {
-					return post.get('id') === action.payload.postId;
+					return post.get('id') === payload.postId;
 				}),
 				'likes'
 			],
 			likes => {
-				return likes.unshift(action.payload.liker)
+				return likes.unshift(payload.liker)
 			})
 		
 		case types.UNLIKE_POST:
 			return state.updateIn([
 				state.findIndex(post => {
-					return post.get('id') === action.payload.postId;
+					return post.get('id') === payload.postId;
 				}),
 				'likes'
 			],
 			likes => {
-				return likes.filter(liker => liker.get('id') !== action.payload.liker.get('id'))
+				return likes.filter(liker => liker.get('id') !== payload.liker.get('id'))
 			})
 
 		default:
