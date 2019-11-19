@@ -1,6 +1,7 @@
 import { fromJS, List } from 'immutable';
 
 import { types } from './types';
+import { log } from 'util';
 
 const initialState = List();
 
@@ -38,7 +39,7 @@ export const postsReducer = (state = initialState, action) => {
 				'likes'
 			],
 			likes => {
-				return likes.filter(liker => liker.get('id') !== payload.liker.get('id'))
+				return likes.filter(liker => liker.get('id') !== payload.userId)
 			})
 
 		default:
