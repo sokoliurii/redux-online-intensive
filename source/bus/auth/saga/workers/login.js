@@ -1,4 +1,5 @@
 import { put, apply } from 'redux-saga/effects';
+import { actions } from 'react-redux-form';
 
 import { api } from '../../../../REST';
 import { authAction } from '../../actions';
@@ -23,6 +24,8 @@ export function* login({payload: userInfo}) {
 		yield apply(localStorage, localStorage.setItem, ['token', profile.token]);
 		
 		yield put(profileActions.fillProfile(profile));
+		yield put(actions.change('forms.user.profile.firstName', profile.firstName));
+		yield put(actions.change('forms.user.profile.lastName', profile.lastName));
 		yield put(authAction.authentificate());
 	} catch(error) {
 		console.log(error, 'login worker');
