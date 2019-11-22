@@ -21,7 +21,6 @@ export const socketActions = {
         });
 
         socket.on('remove', (event) => {
-            console.log('remove →', event);
             const { data } = JSON.parse(event);
             dispatch(postsActions.removePost(data))
         });
