@@ -15,6 +15,11 @@ const userProfile = {
     token,
 };
 
+const usersData = [
+    userProfile,
+    userProfile
+];
+
 const credentials = {
     email:    'test@email.com',
     password: '1111',
@@ -49,6 +54,7 @@ const url = 'https://www.url.com';
 
 global.__ = {
     userProfile,
+    usersData,
     errorMessage,
     token,
     error,
